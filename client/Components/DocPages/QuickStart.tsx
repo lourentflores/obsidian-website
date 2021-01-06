@@ -102,24 +102,64 @@ const App = () => {
       <br />
       <h2>Making a Query</h2>
       <CodeBlock language="tsx" showLineNumbers={true} style={dracula}>
-        {`import { useObsidian } from 'https://deno.land/x/obsidian/clientMod.ts';
+        {`import { useObsidian, BrowserCache } from 'https://deno.land/x/obsidian/clientMod.ts';
 
 const MovieApp = () => {
-  const { gather } = useObsidian();
-  const [movies, setMovies] = (React as any).useState('Sunny');
+  const { query, cache, setCache } = useObsidian();
+  const [movies, setMovies] = (React as any).useState('');
+
+  const queryStr = \`query { 
+      movies {
+        id
+        title
+        releaseYear
+        genre
+      }
+    }
+  \`
 
   return (
     <h1>{movies}</h1>
     <button
       onClick={() => {
-        query(\`query { getMovies { id description } }\`)
-        .then(resp => setMovies(resp.data.getMovies.description))
+        query(queryStr)
+        .then(resp => setMovies(resp.data))
+        .then(resp => setCache(new BrowserCache(cache.storage)))
       }}
     >Get Movies</button>
   );
 };`}
       </CodeBlock>
       <br />
+      <h2>Making a Mutation</h2>
+      <CodeBlock language="tsx" showLineNumbers={true} style={dracula}>
+        {`import { useObsidian, BrowserCache } from 'https://deno.land/x/obsidian/clientMod.ts';
+
+const MovieApp = () => {
+  const { mutate, cache, setCache } = useObsidian();
+  const [movies, setMovies] = (React as any).useState('');
+
+  const queryStr = \`mutation {
+    addMovie(input: {title: "Cruel Intentions", releaseYear: 1999, genre: "DRAMA" }) {
+      id
+      title
+      releaseYear
+      genre
+    }
+  }
+  \`;
+
+  return (
+    <h1>{movies}</h1>
+    <button
+      onClick={() => {
+        mutate(queryStr)
+        .then(resp => setMovies(resp.data))
+        .then(resp => setCache(new BrowserCache(cache.storage)))
+      }}
+    >Get Movies</button>
+  );
+};`}
     </div>
   );
 };
