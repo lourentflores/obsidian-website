@@ -7,8 +7,7 @@ const ServerSideRendering = (props: any) => {
       <h1>Server-Side Rendering</h1>
       <p>In this chapter, we'll learn how to implement ObsidianWrapper, <code className="obsidianInline">obsidian</code>'s GraphQL client, in a React app built with server-side rendering.</p>
       <h2>ObsidianWrapper</h2>
-      <p>Before we can discuss server-side rendering in Deno, we must first build out our client application.  Setting up ObsidianWrapper is super simple: wrap your app with ObsidianWrapper, and attach ObsidianRouter's <code className="obsidianInline">obsidianSchema</code> to the window object, like so:</p>
-      <p><code className="obsidianInline">window.__INITIAL_STATE__ = {"{ obsidianSchema: // obsidianSchema here }"}</code></p>
+      <p>Before we can discuss server-side rendering in Deno, we must first build out our client application. Setting up ObsidianWrapper is super simple: wrap your app with ObsidianWrapper and you are ready to start using <code className="obsidianInline">obsidian</code>'s caching capabilities!
       <h3>Installation</h3>
       <p>Import React and ObsidianWrapper at your top-level component along with any child components:</p>
       <CodeBlock
@@ -73,22 +72,6 @@ export default MainContainer;`}
       <br/>
       <h2>Serving Our App</h2>
       <p>Now that we've built a simple React app, let's utilize server-side rendering to send a pre-rendered version to the client.</p>
-      <h3>obsidianSchema</h3>
-      <p>The first step to constructing our HTML is to extract the <code className="obsidianInline">obsidianSchema</code> from our ObsidianRouter.  We can then attach it to an initialState object:</p>
-      <CodeBlock
-        language="tsx"
-        showLineNumbers={true}
-        style={dracula}
-      >
-        {`// server.tsx
-interface initialState {
-  obsidianSchema?: any;
-}
-
-const initialState: initialState = {
-  obsidianSchema: GraphQLRouter.obsidianSchema
-}`}
-      </CodeBlock>
       <br/>
       <h3>Router Setup</h3>
       <p>We can create a router for our base path like so:</p>
@@ -124,9 +107,6 @@ function handlePage(ctx: any) {
       <head>
         <meta charset="UTF-8">
         <title>Obsidian Film Showcase</title>
-        <script>
-          window.__INITIAL_STATE__ = \${JSON.stringify(initialState)};
-        </script>
       </head>
       <body>
         <div id="root">\${body}</div>
@@ -214,7 +194,7 @@ app.use(hydrateRouter.routes(), hydrateRouter.allowedMethods());`}
       <p>Our command to start our server has expanded now that we're bundling our client.tsx file.  The new command to start up our server looks like this:</p>
       <p><code className="obsidianInline">deno run --allow-net --allow-read --unstable server.tsx -c tsconfig.json</code></p>
       <h4>Recap & Next Up</h4>
-      <p>In this chapter we set up a simple React app and implemented ObsidianWrapper, enabling fetching and caching at a global level.  We utilized server-side rendering to send a pre-rendered version of our app to the client, along with <code className="obsidianInline">obsidianSchema</code> to enable client-side caching.  Next, we'll take a look at querying with <code className="obsidianInline">obsidian</code> and the different methods and options available.</p>
+      <p>In this chapter we set up a simple React app and implemented ObsidianWrapper, enabling fetching and caching at a global level.  We utilized server-side rendering to send a pre-rendered version of our app to the client.  Next, we'll take a look at querying with <code className="obsidianInline">obsidian</code> and the different methods and options available.</p>
     </div>
   )
 }

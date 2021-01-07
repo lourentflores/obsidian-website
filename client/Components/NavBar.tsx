@@ -90,12 +90,10 @@ const NavBar = (props: any) => {
         </svg>
         <h3 className='navBtnText'>Team</h3>
       </button>
+      
       <button
         className='navBtn'
-        onClick={() => {
-          setPage('demo');
-        }}
-      >
+        onClick="window.location.href = 'http://demo.obsidian.land';">
         <svg
           width='80%'
           height='70%'

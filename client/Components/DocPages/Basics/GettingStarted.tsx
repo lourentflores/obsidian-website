@@ -99,7 +99,7 @@ const GraphQLRouter = await ObsidianRouter<ObsRouter>({
   Router,
   typeDefs: types,
   resolvers: resolvers,
-  useCache: false,
+  
 });
 
 app.use(GraphQLRouter.routes(), GraphQLRouter.allowedMethods());`}
